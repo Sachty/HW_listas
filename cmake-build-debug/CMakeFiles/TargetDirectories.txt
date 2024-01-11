@@ -1,0 +1,3 @@
+C:/Users/allxs/OneDrive/Imágenes/Estudios 2023-2/Algoritmos y estructura de datos/Code/HW_listas/cmake-build-debug/CMakeFiles/HW_listas.dir
+C:/Users/allxs/OneDrive/Imágenes/Estudios 2023-2/Algoritmos y estructura de datos/Code/HW_listas/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/allxs/OneDrive/Imágenes/Estudios 2023-2/Algoritmos y estructura de datos/Code/HW_listas/cmake-build-debug/CMakeFiles/rebuild_cache.dir

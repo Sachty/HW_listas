@@ -1,0 +1,5 @@
+"C:\Users\allxs\AppData\Local\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Users/allxs/AppData/Local/JetBrains/CLion 2023.1.1/bin/ninja/win/x64/ninja.exe" -G Ninja -S "C:\Users\allxs\OneDrive\Imágenes\Estudios 2023-2\Algoritmos y estructura de datos\Code\HW_listas" -B "C:\Users\allxs\OneDrive\Imágenes\Estudios 2023-2\Algoritmos y estructura de datos\Code\HW_listas\cmake-build-debug"
+-- Configuring done
+CMake Error: CMake can not determine linker language for target: HW_listas
+-- Generating done
+CMake Generate step failed.  Build files cannot be regenerated correctly.
