@@ -6,6 +6,6 @@ set(CMAKE_C_STANDARD 11)
 include_directories(.)
 
 add_executable(HW_listas
-        double_list.h
+        doubly_list.h
         forward_list.h
         main.cpp)

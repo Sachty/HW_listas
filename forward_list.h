@@ -5,84 +5,165 @@
 #ifndef HW_LISTAS_FORWARD_LIST_H
 #define HW_LISTAS_FORWARD_LIST_H
 
-class forward_list{
-    struct Node{
-        int data;
-        Node *next;
-    };
+#include <iostream>
+using namespace std;
 
-    Node* head = nullptr;
-
+// FORWARD LIST
+template <typename T>
+class ListNode {
 public:
-    void push_front(int value){
-        Node* old_head = head;
-        Node* new_node = new Node;
-        new_node->data = value;
-        head = new_node;
-        new_node->next= old_head;
+    T value;
+    ListNode* next;
+    ListNode(const T& val) : value(val), next(nullptr) {}
+};
+
+template <typename T>
+class ForwardList {
+private:
+    ListNode<T>* head;
+public:
+    ForwardList() : head(nullptr) {}
+
+    T front() {
+        if (empty()) {
+            throw out_of_range("Lista vacía");
+        }
+        return head->value;
     }
 
-    void push_back(int value) {
-        Node *new_node = new Node;
-        new_node->data = value;
-        Node *temp = head;
+    T back() {
+        if (empty()) {
+            throw out_of_range("Lista vacía");
+        }
+        ListNode<T>* temp = head;
+        while (temp->next != nullptr) {
+            temp = temp->next;
+        }
+        return temp->value;
+    }
 
-        while (new_node->next != nullptr) {
+    void push_front(const T& val) {
+        ListNode<T>* newNode = new ListNode<T>(val);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    void push_back(const T& val) {
+        ListNode<T>* newNode = new ListNode<T>(val);
+        if (empty()) {
+            head = newNode;
+        }
+        else {
+            ListNode<T>* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    T pop_front() {
+        if (empty()) {
+            throw out_of_range("Lista vacía");
+        }
+
+        T frontValue = head->value;
+        ListNode<T>* temp = head;
+        head = head->next;
+        delete temp;
+        return frontValue;
+    }
+
+    T pop_back() {
+        if (empty()) {
+            throw out_of_range("Lista vacía");
+        }
+
+        // Si solo tiene un elemento
+        if (head->next == nullptr) {
+            T backValue = head->value;
+            delete head;
+            head = nullptr;
+            return backValue;
+        }
+        // Si tiene más de 1 elemento
+        ListNode<T>* temp = head;
+        while (temp->next->next != nullptr) { // Llega al penultimo
             temp = temp->next;
         }
 
-        // Una vez en el final
-        temp->next = new_node; // El sgte del ultimo es el nuevo nodo pusheado
-        new_node->next= nullptr;
-    }
-
-    void pop_front(){
-        Node* new_head = head->next;
-        head = new_head;
-        delete new_head;
-    }
-
-    void pop_back(){
-        Node* temp = head;
-
-        // Recorrer hasta el penultimo
-        while(temp->next->next!= nullptr){
-            temp = temp->next;
-        }
-        // Eliminar el siguiente del penultimo
+        T backValue = temp->next->value; // valor antiguo
         delete temp->next;
         temp->next = nullptr;
+        return backValue;
     }
 
-    void insert(int value, int position){
-        Node* temp = head;
-        int counter = 0;
+    T operator[](int index) {
+        if (index < 0 or size()-1< index) {
+            throw out_of_range("Indice fuera de rango");
+        }
 
-        // Recorrer hasta uno antes de la posicion a colocar
-        while(counter < position){ // counter = position -1
+        ListNode<T>* temp = head;
+        for (int i = 0; i < index && temp != nullptr; ++i) {
             temp = temp->next;
         }
 
-        Node* new_node = new Node;
-        new_node->data = value;
+        if (temp == nullptr) {
+            throw out_of_range("Indice no funcional");
+        }
 
-        new_node->next = temp->next;
-        temp->next = new_node;
+        return temp->value;
     }
 
-    void clear(){
-        while(head!= nullptr){
-            Node* temp = head;
-            // Adelantamos la cabeza
-            head = head->next;
-            // Se elimina el anterior de la cabeza, nunca la cabeza
-            delete temp;
+    bool empty() {
+        return head == nullptr;
+    }
+
+    int size() {
+        int count = 0;
+        ListNode<T>* temp = head;
+        while (temp != nullptr) {
+            ++count;
+            temp = temp->next;
+        }
+        return count;
+    }
+
+    void clear() {
+        while (!empty()) {
+            pop_front();
         }
     }
 
+    void sort() {
+        // BubbleSort
+        for (ListNode<T>* i = head; i != nullptr; i = i->next) {
+            for (ListNode<T>* j = i->next; j != nullptr; j = j->next) {
+                if (i->value > j->value) {
+                    // Intercambiar los valores de los nodos
+                    T tempVal = i->value;
+                    i->value = j->value;
+                    j->value = tempVal;
+                }
+            }
+        }
+    }
 
+    void reverse() {
+        ListNode<T>* prev = nullptr;
+        ListNode<T>* temp = head;
+        ListNode<T>* next = nullptr;
 
+        while (temp != nullptr) {
+            next = temp->next;
+            temp->next = prev;
+            prev = temp;
+            temp = next;
+        }
+
+        head = prev;
+    }
 };
 
 
-#endif //HW_LISTAS_FORWARD_LIST_H
+#endif
